@@ -171,8 +171,22 @@ func Speak(text string) {
 	speech.Speak(text)
 }
 
+//Create `audio` dir if not exists
+func CreateAudioDirIfNotExist() {
+	_, err := os.Stat(AudioDir)
+	if os.IsNotExist(err) {
+		errDir := os.MkdirAll(AudioDir, 0755)
+		if errDir != nil {
+			log.Fatal(err)
+		}
+	}
+}
+
 //func MAIN
 func main() {
+	//create audio dir --> if not exists
+	CreateAudioDirIfNotExist()
+
 	//Add 2 sync.WaitGroup
 	wg.Add(2)
 
@@ -183,3 +197,4 @@ func main() {
 	//wait the sync.WaitGroup
 	wg.Wait()
 }
+
